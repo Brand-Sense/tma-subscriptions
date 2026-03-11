@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MaxPay — Зарубежные подписки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Mulish:wght@300;400;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<!-- ШАПКА -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Max<span>Pay</span></div>
+    <div class="header-badge">🌍 Зарубежные сервисы</div>
+  </div>
+</header>
+
+<!-- СТРАНИЦА: КАТАЛОГ -->
+<div class="page active" id="page-catalog">
+
+  <!-- ФИЛЬТРЫ КАТЕГОРИЙ -->
+  <div class="filters-wrap">
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-cat="all">Все</button>
+      <button class="filter-btn" data-cat="streaming">🎬 Стриминг</button>
+      <button class="filter-btn" data-cat="ai">🤖 AI-сервисы</button>
+      <button class="filter-btn" data-cat="music">🎵 Музыка</button>
+      <button class="filter-btn" data-cat="tools">🛠 Инструменты</button>
+    </div>
+  </div>
+
+  <!-- FEATURED КАРТОЧКА -->
+  <div class="featured-wrap" id="featured-wrap">
+    <div class="featured-card" id="featured-card">
+      <div class="featured-bg" id="featured-bg"></div>
+      <div class="featured-content">
+        <div class="featured-logo" id="featured-logo"></div>
+        <div class="featured-info">
+          <div class="featured-name" id="featured-name"></div>
+          <div class="featured-desc" id="featured-desc"></div>
+          <div class="featured-price" id="featured-price"></div>
+        </div>
+        <button class="featured-btn" id="featured-btn">Подключить</button>
+      </div>
+    </div>
+    <!-- dots -->
+    <div class="featured-dots" id="featured-dots"></div>
+  </div>
+
+  <!-- СПИСОК СЕРВИСОВ -->
+  <div class="section-header">
+    <div class="section-title" id="section-title">Все сервисы</div>
+    <div class="section-line"></div>
+    <div class="section-count" id="section-count"></div>
+  </div>
+
+  <div class="services-grid" id="services-grid"></div>
+
+</div>
+
+<!-- СТРАНИЦА: ДЕТАЛИ СЕРВИСА -->
+<div class="page" id="page-service">
+  <div class="service-hero">
+    <div class="service-hero-bg" id="svc-hero-bg"></div>
+    <div class="service-hero-content">
+      <div class="service-hero-logo" id="svc-logo"></div>
+      <div class="service-hero-name" id="svc-name"></div>
+      <div class="service-hero-badge" id="svc-badge"></div>
+    </div>
+  </div>
+
+  <div class="service-body">
+    <p class="service-desc" id="svc-desc"></p>
+
+    <div class="features-list" id="svc-features"></div>
+
+    <div class="plans-title">Выбери срок подписки</div>
+    <div class="plans-list" id="svc-plans"></div>
+
+    <button class="pay-btn" id="pay-btn">
+      <span id="pay-btn-text">Оплатить</span>
+      <div class="pay-btn-shimmer"></div>
+    </button>
+    <p class="pay-note">Безопасная оплата через Telegram Payments</p>
+  </div>
+</div>
+
+<!-- СТРАНИЦА: МОИ ПОДПИСКИ -->
+<div class="page" id="page-my">
+  <div class="empty-state" id="my-empty">
+    <div class="empty-icon">📦</div>
+    <div class="empty-title">Пока пусто</div>
+    <div class="empty-sub">После оплаты подписки появятся здесь</div>
+    <button class="empty-btn" onclick="navigate('catalog')">Перейти в каталог</button>
+  </div>
+  <div class="my-list" id="my-list"></div>
+</div>
+
+<!-- СТРАНИЦА: ПРОФИЛЬ -->
+<div class="page" id="page-profile">
+  <div class="profile-card">
+    <div class="profile-avatar" id="profile-avatar">👤</div>
+    <div class="profile-name" id="profile-name">Пользователь</div>
+    <div class="profile-username" id="profile-username"></div>
+  </div>
+  <div class="profile-stats">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-subs">0</div>
+      <div class="stat-label">Подписок</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-saved">0 ₽</div>
+      <div class="stat-label">Сэкономлено</div>
+    </div>
+  </div>
+  <div class="profile-menu">
+    <div class="menu-item">
+      <span>🔔</span> Уведомления о продлении
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span>💬</span> Поддержка
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span>📋</span> Условия использования
+      <span class="menu-arrow">›</span>
+    </div>
+  </div>
+</div>
+
+<!-- СТРАНИЦА: УСПЕХ -->
+<div class="page" id="page-success">
+  <div class="success-content">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Заявка принята!</div>
+    <div class="success-sub">Мы обрабатываем ваш заказ. В течение 15 минут вы получите инструкции в этом чате.</div>
+    <div class="success-card" id="success-card"></div>
+    <button class="success-btn" onclick="navigate('catalog')">Вернуться в каталог</button>
+  </div>
+  <canvas id="confetti-canvas"></canvas>
+</div>
+
+<!-- НИЖНЯЯ НАВИГАЦИЯ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="catalog" onclick="navigate('catalog')">
+    <div class="nav-icon">🛍</div>
+    <div class="nav-label">Каталог</div>
+  </button>
+  <button class="nav-btn" data-page="my" onclick="navigate('my')">
+    <div class="nav-icon">⭐</div>
+    <div class="nav-label">Мои</div>
+  </button>
+  <button class="nav-btn" data-page="profile" onclick="navigate('profile')">
+    <div class="nav-icon">👤</div>
+    <div class="nav-label">Профиль</div>
+  </button>
+</nav>
+
+<!-- МОДАЛ ВЫХОДА -->
+<div class="exit-modal" id="exitModal">
+  <div class="exit-modal-backdrop" id="exitBackdrop"></div>
+  <div class="exit-modal-sheet">
+    <div class="exit-modal-handle"></div>
+    <div class="exit-modal-title">Выйти из приложения?</div>
+    <div class="exit-modal-sub">Ваши подписки сохранятся</div>
+    <div class="exit-modal-btns">
+      <button class="exit-btn-cancel" id="exitCancel">Остаться</button>
+      <button class="exit-btn-confirm" id="exitConfirm">Выйти</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/services.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
