@@ -161,20 +161,31 @@ function initFeatured() {
     `<div class="featured-dot ${i === 0 ? 'active' : ''}" data-i="${i}"></div>`
   ).join("");
   dotsEl.querySelectorAll(".featured-dot").forEach(d => {
-    d.addEventListener("click", () => showFeatured(+d.dataset.i));
+    d.addEventListener("click", () => { clearInterval(featuredInterval); showFeatured(+d.dataset.i); });
   });
 
   // Featured btn
   document.getElementById("featured-btn")?.addEventListener("click", () => {
     openService(services[featuredIndex]?.id);
   });
-  document.getElementById("featured-card")?.addEventListener("click", (e) => {
-    if (!e.target.closest(".featured-btn")) openService(services[featuredIndex]?.id);
+
+  // Swipe support
+  const card = document.getElementById("featured-card");
+  let touchStartX = 0;
+  card?.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  card?.addEventListener("touchend", e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      clearInterval(featuredInterval);
+      if (diff > 0) showFeatured((featuredIndex + 1) % services.length);
+      else showFeatured((featuredIndex - 1 + services.length) % services.length);
+    } else {
+      openService(services[featuredIndex]?.id);
+    }
   });
 
   showFeatured(0);
 
-  // Auto-rotate
   featuredInterval = setInterval(() => {
     showFeatured((featuredIndex + 1) % services.length);
   }, 4000);
