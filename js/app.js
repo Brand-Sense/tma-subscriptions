@@ -49,6 +49,7 @@ let currentCategory = "all";
 let selectedService = null;
 let selectedPlan = null;
 let mySubscriptions = [];
+let featuredIndex = 0;
 let featuredInterval = null;
 
 const FEATURED_IDS = ["spotify", "netflix", "chatgpt"];
@@ -149,114 +150,62 @@ function initFilters() {
 }
 
 // ============================================================
-// СЛАЙДЕР
+// FEATURED СЛАЙДЕР
 // ============================================================
-let sliderIndex = 0;
-let sliderDragging = false;
-let sliderStartX = 0;
-let sliderCurrentX = 0;
-let sliderOffset = 0;
-
-const FEATURED_IDS = ["spotify", "netflix", "chatgpt"];
-
 function initFeatured() {
   const services = FEATURED_IDS.map(id => SERVICES.find(s => s.id === id)).filter(Boolean);
-  const track = document.getElementById("slider-track");
-  const dotsEl = document.getElementById("slider-dots");
-  if (!track || !dotsEl) return;
-
-  // Создаём слайды
-  services.forEach((svc, i) => {
-    const slide = document.createElement("div");
-    slide.className = "slide";
-    slide.innerHTML = `
-      <div class="slide-bg" style="background:${svc.bgGradient}"></div>
-      <div class="slide-content">
-        <div class="slide-logo">${svc.logo}</div>
-        <div class="slide-info">
-          <div class="slide-name">${svc.name}</div>
-          <div class="slide-desc">${svc.shortDesc}</div>
-          <div class="slide-price">от ${formatPrice(svc.plans[0].priceRub)}</div>
-        </div>
-      </div>
-      <button class="slide-btn" data-id="${svc.id}">Подключить</button>
-    `;
-    track.appendChild(slide);
-  });
+  const dotsEl = document.getElementById("featured-dots");
 
   // Dots
   dotsEl.innerHTML = services.map((_, i) =>
-    `<div class="slider-dot ${i === 0 ? 'active' : ''}" data-i="${i}"></div>`
+    `<div class="featured-dot ${i === 0 ? 'active' : ''}" data-i="${i}"></div>`
   ).join("");
-  dotsEl.querySelectorAll(".slider-dot").forEach(d => {
-    d.addEventListener("click", () => { clearInterval(featuredInterval); goToSlide(+d.dataset.i); });
+  dotsEl.querySelectorAll(".featured-dot").forEach(d => {
+    d.addEventListener("click", () => { clearInterval(featuredInterval); showFeatured(+d.dataset.i); });
   });
 
-  // Кнопки
-  track.querySelectorAll(".slide-btn").forEach(btn => {
-    btn.addEventListener("click", e => { e.stopPropagation(); openService(btn.dataset.id); });
+  // Featured btn
+  document.getElementById("featured-btn")?.addEventListener("click", () => {
+    openService(services[featuredIndex]?.id);
   });
 
-  // Touch/drag свайп
-  track.addEventListener("touchstart", e => {
-    clearInterval(featuredInterval);
-    sliderStartX = e.touches[0].clientX;
-    sliderDragging = true;
-    track.classList.add("dragging");
-  }, { passive: true });
-
-  track.addEventListener("touchmove", e => {
-    if (!sliderDragging) return;
-    sliderCurrentX = e.touches[0].clientX - sliderStartX;
-    const slideW = track.querySelector(".slide").offsetWidth + 16;
-    track.style.transform = `translateX(${-sliderIndex * slideW + sliderCurrentX}px)`;
-  }, { passive: true });
-
-  track.addEventListener("touchend", () => {
-    track.classList.remove("dragging");
-    sliderDragging = false;
-    const slideW = track.querySelector(".slide").offsetWidth + 16;
-    if (sliderCurrentX < -50 && sliderIndex < services.length - 1) {
-      goToSlide(sliderIndex + 1);
-    } else if (sliderCurrentX > 50 && sliderIndex > 0) {
-      goToSlide(sliderIndex - 1);
+  // Swipe support
+  const card = document.getElementById("featured-card");
+  let touchStartX = 0;
+  card?.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  card?.addEventListener("touchend", e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      clearInterval(featuredInterval);
+      if (diff > 0) showFeatured((featuredIndex + 1) % services.length);
+      else showFeatured((featuredIndex - 1 + services.length) % services.length);
     } else {
-      goToSlide(sliderIndex);
+      openService(services[featuredIndex]?.id);
     }
-    sliderCurrentX = 0;
-    restartSliderInterval(services.length);
   });
 
-  // Клик по слайду
-  track.querySelectorAll(".slide").forEach((slide, i) => {
-    slide.addEventListener("click", () => {
-      if (Math.abs(sliderCurrentX) < 5) openService(services[i].id);
-    });
-  });
+  showFeatured(0);
 
-  goToSlide(0);
-  restartSliderInterval(services.length);
+  featuredInterval = setInterval(() => {
+    showFeatured((featuredIndex + 1) % services.length);
+  }, 4000);
 }
 
-function goToSlide(i) {
-  const track = document.getElementById("slider-track");
-  if (!track) return;
-  const slide = track.querySelector(".slide");
-  if (!slide) return;
-  const slideW = slide.offsetWidth + 16;
-  sliderIndex = i;
-  track.style.transform = `translateX(${-i * slideW}px)`;
-  document.querySelectorAll(".slider-dot").forEach((d, idx) => {
+function showFeatured(i) {
+  const services = FEATURED_IDS.map(id => SERVICES.find(s => s.id === id)).filter(Boolean);
+  const svc = services[i];
+  if (!svc) return;
+  featuredIndex = i;
+
+  document.getElementById("featured-bg").style.background = svc.bgGradient;
+  document.getElementById("featured-logo").innerHTML = svc.logo;
+  document.getElementById("featured-name").textContent = svc.name;
+  document.getElementById("featured-desc").textContent = svc.shortDesc;
+  document.getElementById("featured-price").textContent = "от " + formatPrice(svc.plans[0].priceRub);
+
+  document.querySelectorAll(".featured-dot").forEach((d, idx) => {
     d.classList.toggle("active", idx === i);
   });
-  haptic("light");
-}
-
-function restartSliderInterval(total) {
-  clearInterval(featuredInterval);
-  featuredInterval = setInterval(() => {
-    goToSlide((sliderIndex + 1) % total);
-  }, 4000);
 }
 
 // ============================================================
