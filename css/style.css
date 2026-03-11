@@ -153,38 +153,51 @@ body::before {
 }
 
 /* ============================================================
-   FEATURED КАРТОЧКА
+   СЛАЙДЕР
    ============================================================ */
-.featured-wrap {
-  padding: 16px 16px 8px;
+.slider-wrap {
   position: relative;
+  padding: 16px 0 8px;
+  overflow: hidden;
 }
 
-.featured-card {
-  position: relative;
+.slider-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+}
+.slider-track.dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+.slide {
+  flex-shrink: 0;
+  width: calc(100vw - 32px);
+  margin: 0 16px 0 0;
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
   height: 180px;
-  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.2s;
 }
-.featured-card:active { transform: scale(0.98); }
+.slide:first-child { margin-left: 16px; }
 
-.featured-bg {
+.slide-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #1e3a5f 0%, #0f2040 100%);
-  transition: background 0.5s ease;
+  transition: none;
 }
-.featured-bg::after {
+.slide-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(8,12,20,0.6) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, transparent 60%);
 }
 
-.featured-content {
+.slide-content {
   position: relative;
   z-index: 2;
   height: 100%;
@@ -194,52 +207,52 @@ body::before {
   gap: 16px;
 }
 
-.featured-logo {
+.slide-logo {
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  overflow: hidden;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.15);
-  padding: 12px;
+  overflow: hidden;
+  padding: 10px;
 }
-.featured-logo svg { width: 100%; height: 100%; display: block; }
+.slide-logo img { width: 100%; height: 100%; object-fit: contain; }
 
-.featured-info { flex: 1; }
+.slide-info { flex: 1; }
 
-.featured-name {
+.slide-name {
   font-family: 'Unbounded', sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: #fff;
   margin-bottom: 4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
-.featured-desc {
+.slide-desc {
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.4;
-  margin-bottom: 8px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 10px;
 }
 
-.featured-price {
-  font-size: 13px;
+.slide-price {
+  font-size: 14px;
   font-weight: 700;
   color: var(--gold-light);
 }
 
-.featured-btn {
+.slide-btn {
   position: absolute;
   bottom: 16px;
   right: 16px;
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
   color: #fff;
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
@@ -250,22 +263,22 @@ body::before {
   transition: background 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
-.featured-btn:active { background: rgba(255,255,255,0.25); }
+.slide-btn:active { background: rgba(255,255,255,0.3); }
 
-.featured-dots {
+.slider-dots {
   display: flex;
   justify-content: center;
   gap: 6px;
-  padding-top: 10px;
+  padding-top: 12px;
 }
-.featured-dot {
+.slider-dot {
   width: 6px; height: 6px;
   border-radius: 3px;
   background: var(--text-muted);
-  transition: width 0.3s, background 0.3s;
+  transition: width 0.3s ease, background 0.3s ease;
   cursor: pointer;
 }
-.featured-dot.active { width: 20px; background: var(--accent2); }
+.slider-dot.active { width: 22px; background: var(--accent2); }
 
 /* ============================================================
    СЕКЦИЯ

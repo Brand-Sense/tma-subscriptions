@@ -1,22 +1,14 @@
-// SVG логотипы сервисов — проверенные пути
+// Иконки с надёжного CDN
 const LOGOS = {
-  spotify: `<svg viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/svg"><path fill="#1ED760" d="M84 0C37.6 0 0 37.6 0 84s37.6 84 84 84 84-37.6 84-84S130.4 0 84 0zm38.6 121.2c-1.5 2.5-4.8 3.3-7.3 1.8-20-12.2-45.2-15-74.9-8.2-2.9.7-5.7-1.1-6.4-3.9-.7-2.9 1.1-5.7 3.9-6.4 32.5-7.4 60.4-4.2 82.9 9.5 2.5 1.5 3.3 4.8 1.8 7.2zm10.3-22.9c-1.9 3.1-6 4.1-9.1 2.2-22.9-14.1-57.8-18.2-84.9-9.9-3.5 1.1-7.2-.9-8.3-4.4-1.1-3.5.9-7.2 4.4-8.3 30.9-9.4 69.4-4.8 95.7 11.3 3.1 1.9 4.1 6 2.2 9.1zm.9-23.8C108.6 57.5 63.4 56 37.2 64c-4.2 1.3-8.6-1-9.9-5.2-1.3-4.2 1-8.6 5.2-9.9 30-9.1 79.8-7.3 111.2 11.1 3.8 2.2 5 7.1 2.8 10.9-2.1 3.8-7 5-10.7 2.8z"/></svg>`,
-
-  netflix: `<svg viewBox="0 0 111 190" xmlns="http://www.w3.org/2000/svg"><path fill="#E50914" d="M0 0h30.4v124.3L82.7 0H111v190H80.7V66.5L28.8 190H0z"/></svg>`,
-
-  youtube: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#FF0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>`,
-
-  chatgpt: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#74aa9c" d="M22.3 9.8a6 6 0 0 0-.5-4.9 6 6 0 0 0-6.5-2.9A6 6 0 0 0 5 4.2a6 6 0 0 0-4 2.9 6 6 0 0 0 .7 7.1 6 6 0 0 0 .5 4.9 6 6 0 0 0 6.5 2.9A6 6 0 0 0 13.3 24a6 6 0 0 0 5.7-4.2 6 6 0 0 0 4-2.9 6 6 0 0 0-.7-7.1zM13.3 22.4a4.5 4.5 0 0 1-2.9-1l.1-.1 4.8-2.8a.8.8 0 0 0 .4-.7v-6.7l2 1.2v5.6a4.5 4.5 0 0 1-4.4 4.5zM3.6 18.3a4.5 4.5 0 0 1-.5-3l.1.1 4.8 2.8a.8.8 0 0 0 .8 0l5.8-3.4v2.3l-4.8 2.8a4.5 4.5 0 0 1-6.2-1.6zM2.3 7.9a4.5 4.5 0 0 1 2.4-2V11.6a.8.8 0 0 0 .4.7l5.8 3.3-2 1.2-4.8-2.8A4.5 4.5 0 0 1 2.3 7.9zm16.6 3.9l-5.8-3.4 2-1.2 4.8 2.8a4.5 4.5 0 0 1-.7 8.1v-5.6a.8.8 0 0 0-.3-.7zm2-3l-.1-.1-4.8-2.8a.8.8 0 0 0-.8 0L9.4 9.2V6.9l4.8-2.8a4.5 4.5 0 0 1 6.7 4.7zm-12.6 4.1l-2-1.2V6.1a4.5 4.5 0 0 1 7.4-3.5l-.1.1-4.8 2.8a.8.8 0 0 0-.4.7zm1.1-2.4l2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5z"/></svg>`,
-
-  adobe: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#FF0000" d="M14 2H8.5L2 22h5l1.8-5h6.3l1.8 5H22zm-3 4.8L13.3 15H9.7z"/></svg>`,
-
-  canva: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#00C4CC" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm4 15.5c-.4.6-1 .8-1.7.4-2.3-1.4-5.3-1.7-8.7-.9-.7.2-1.3-.3-1.5-.9-.2-.7.3-1.3.9-1.5 3.8-.8 7-.5 9.6 1.1.7.4.8 1.3.4 1.8zm1.1-2.9c-.5.8-1.5 1-2.3.6C12.4 11.6 9 11 5.9 11.9c-.9.3-1.8-.2-2.1-1.1-.3-.9.2-1.8 1.1-2.1 3.6-1.1 7.5-.5 10.5 1.4.8.5 1 1.5.6 2.3zm.1-2.9C14.4 8 10 7.7 7 8.6c-1 .3-2.1-.3-2.4-1.3-.3-1 .3-2.1 1.3-2.4C10 3.6 15.2 3.9 19 6.1c.9.5 1.2 1.7.7 2.6-.5.9-1.7 1.2-2.5.7z"/></svg>`,
-
-  notion: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M4.5 4.2c.7.6 1 .6 2.4.5l13.2-.8c.3 0 0-.3 0-.3L17.9 2c-.4-.3-1-.7-2.1-.6L3 2.3c-.5 0-.6.3-.4.5zM5.3 7.2V21c0 .7.4 1 1.2 1l14.5-.8c.8 0 .9-.6.9-1.2V6.4c0-.6-.2-.9-.7-.9L6 6.4c-.6 0-.8.3-.8.9zm14.3.7c.1.4 0 .8-.4.9l-.7.1v10.3c-.6.3-1.2.5-1.6.5-.7 0-.9-.2-1.5-.9l-4.6-7.2V19l1.2.3s0 .8-1.2.8l-3.2.2c-.1-.2 0-.7.3-.7l.8-.2V9.9L7.8 9.8c-.1-.4.1-1 .8-1.1l3.5-.2 4.8 7.3V9.4l-1.2-.1c-.1-.5.3-.9.7-.9zM2 1l13.3-1c1.6-.1 2-.1 3.1.7l4.2 3c.7.5.9.6.9 1.2v16.4c0 1-.4 1.6-1.7 1.7L6.4 24c-1 0-1.4-.1-2-.7l-3.1-4.1C.8 18.5.5 17.9.5 17.3V2.7C.5 1.8.9 1.1 2 1z"/></svg>`,
-
-  figma: `<svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>`,
-
-  duolingo: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#58CC02" d="M12 1C6.5 1 2 5.5 2 11v8c0 2.2 1.8 4 4 4h12c2.2 0 4-1.8 4-4v-8c0-5.5-4.5-10-10-10zm-3 9a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm6 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-3 6c-2.2 0-4-1-4-2h8c0 1-1.8 2-4 2z"/></svg>`,
+  spotify:  `<img src="https://cdn.simpleicons.org/spotify/1ED760" alt="Spotify">`,
+  netflix:  `<img src="https://cdn.simpleicons.org/netflix/E50914" alt="Netflix">`,
+  youtube:  `<img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube">`,
+  chatgpt:  `<img src="https://cdn.simpleicons.org/openai/74aa9c" alt="ChatGPT">`,
+  adobe:    `<img src="https://cdn.simpleicons.org/adobe/FF0000" alt="Adobe">`,
+  canva:    `<img src="https://cdn.simpleicons.org/canva/00C4CC" alt="Canva">`,
+  notion:   `<img src="https://cdn.simpleicons.org/notion/ffffff" alt="Notion">`,
+  figma:    `<img src="https://cdn.simpleicons.org/figma/F24E1E" alt="Figma">`,
+  duolingo: `<img src="https://cdn.simpleicons.org/duolingo/58CC02" alt="Duolingo">`,
 };
 
 const SERVICES = [
@@ -47,7 +39,7 @@ const SERVICES = [
     logo: LOGOS.netflix,
     badge: "Топ",
     shortDesc: "Фильмы и сериалы",
-    fullDesc: "Тысячи фильмов, сериалов и документальных проектов в 4K качестве. Смотри на любом устройстве.",
+    fullDesc: "Тысячи фильмов, сериалов и документальных проектов в 4K качестве.",
     features: ["4K Ultra HD", "До 4 экранов", "Загрузка контента", "Оригинальные проекты"],
     plans: [
       { id: "1m", name: "1 месяц", priceRub: 499, popular: false },
@@ -101,7 +93,7 @@ const SERVICES = [
     logo: LOGOS.adobe,
     badge: "Pro",
     shortDesc: "Photoshop, Illustrator и др.",
-    fullDesc: "Полный доступ к Adobe Creative Cloud: Photoshop, Illustrator, Premiere Pro, After Effects и 20+ приложений.",
+    fullDesc: "Полный доступ к Adobe Creative Cloud: Photoshop, Illustrator, Premiere Pro и 20+ приложений.",
     features: ["20+ приложений", "100 ГБ облако", "Adobe Fonts", "Обновления включены"],
     plans: [
       { id: "1m", name: "1 месяц", priceRub: 2499, popular: false },
